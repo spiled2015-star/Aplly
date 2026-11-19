@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -28,7 +27,6 @@
     };
   </script>
   <style>
-    /* Ensure pure dark theme and clean custom scrollbar */
     html, body {
       background-color: #000000;
       color: #f4f4f5;
@@ -54,7 +52,6 @@
 </head>
 <body class="bg-black text-zinc-100 min-h-screen flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
 
-  <!-- Discreet Top Bar for Telegram Bot Configuration -->
   <header class="w-full px-4 sm:px-6 py-4 flex items-center justify-between border-b border-zinc-900/80 bg-black/80 backdrop-blur-sm sticky top-0 z-30">
     <button
       type="button"
@@ -74,14 +71,9 @@
     </button>
   </header>
 
-  <!-- Main Content Container -->
   <main class="flex-1 w-full flex flex-col items-center justify-center px-4 py-8 sm:py-12">
 
-    <!-- =====================================================================
-         STEP 1: LANDING / START VIEW
-         - Pure black / dark theme, no images
-         - Displays ZetrexMc title and a button labeled "start"
-         ===================================================================== -->
+    <!-- STEP 1: LANDING / START VIEW -->
     <section
       id="step1Section"
       class="w-full max-w-xl mx-auto flex flex-col items-center justify-center text-center py-12 space-y-8"
@@ -105,13 +97,7 @@
       </button>
     </section>
 
-    <!-- =====================================================================
-         STEP 2: BASIC INFO VIEW
-         - Dark black background with centered card/box in the middle
-         - Large heading at top: "Apply ZetrexMc"
-         - Two inputs: Name (اسمك) and Age (عمرك) with NO examples/placeholders
-         - Blue button labeled "Done"
-         ===================================================================== -->
+    <!-- STEP 2: BASIC INFO VIEW -->
     <section
       id="step2Section"
       class="hidden w-full max-w-md mx-auto"
@@ -123,7 +109,6 @@
         </h2>
 
         <form id="basicInfoForm" class="space-y-5" novalidate>
-          <!-- Name Input (No placeholder / no example) -->
           <div>
             <label for="applicantName" class="block text-sm font-medium text-zinc-200 mb-2">
               Name (اسمك)
@@ -138,7 +123,6 @@
             />
           </div>
 
-          <!-- Age Input (No placeholder / no example) -->
           <div>
             <label for="applicantAge" class="block text-sm font-medium text-zinc-200 mb-2">
               Age (عمرك)
@@ -154,14 +138,12 @@
             />
           </div>
 
-          <!-- Validation / Inline Feedback Message -->
           <div
             id="step2Error"
             class="hidden rounded-xl bg-red-950/60 border border-red-800/70 text-red-200 text-xs sm:text-sm px-4 py-3"
             role="alert"
           ></div>
 
-          <!-- Blue "Done" Button -->
           <div class="pt-2 flex items-center gap-3">
             <button
               type="button"
@@ -182,19 +164,13 @@
       </div>
     </section>
 
-    <!-- =====================================================================
-         STEP 3: 20 ENGLISH STAFF QUESTIONS VIEW
-         - Question 1 explicitly asks for Discord username
-         - Questions 2-20 cover ZetrexMc Minecraft staff/moderation topics
-         - Green button labeled "Apply" at the bottom
-         ===================================================================== -->
+    <!-- STEP 3: 20 ENGLISH STAFF QUESTIONS VIEW -->
     <section
       id="step3Section"
       class="hidden w-full max-w-3xl mx-auto"
       aria-label="ZetrexMc Staff Questions"
     >
       <div class="bg-card border border-line rounded-2xl p-6 sm:p-8 shadow-2xl">
-        <!-- Header & Applicant Summary Bar -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-6 mb-6 border-b border-zinc-800/90">
           <div>
             <p class="text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-1">
@@ -213,17 +189,14 @@
         </div>
 
         <form id="staffQuestionsForm" class="space-y-6" novalidate>
-          <!-- Questions 1 through 20 will be dynamically rendered here -->
           <div id="questionsContainer" class="space-y-5"></div>
 
-          <!-- Status / Error / Result Banner -->
           <div
             id="submissionFeedback"
             class="hidden rounded-2xl border p-4 sm:p-5 text-sm space-y-3"
             role="status"
           ></div>
 
-          <!-- Bottom Actions with Green "Apply" Button -->
           <div class="pt-4 border-t border-zinc-800/90 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <button
               type="button"
@@ -247,10 +220,7 @@
 
   </main>
 
-  <!-- =====================================================================
-       TELEGRAM BOT CONFIGURATION MODAL
-       - Allows owner to save Telegram Bot Token & Chat ID in localStorage
-       ===================================================================== -->
+  <!-- TELEGRAM BOT CONFIGURATION MODAL -->
   <div
     id="telegramModal"
     class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
@@ -324,124 +294,38 @@
     </div>
   </div>
 
-  <!-- =====================================================================
-       APPLICATION LOGIC & 20 ENGLISH STAFF QUESTIONS
-       ===================================================================== -->
   <script>
     (function () {
       'use strict';
 
-      // Storage keys for persisting Telegram settings locally
       const STORAGE_KEYS = {
-        BOT_TOKEN: 'zetrexmc_tg_bot_token',
-        CHAT_ID: 'zetrexmc_tg_chat_id',
+        BOT_TOKEN: '9168556717:AAEiWqaYLWRAYZLKB1HiSyHK6DBbKQXaZDc',
+        CHAT_ID: '5532276472',
       };
 
-      // 20 English questions for ZetrexMc staff application (Q1 = Discord username)
       const STAFF_QUESTIONS = [
-        {
-          id: 1,
-          question: 'What is your Discord username?',
-          type: 'text',
-        },
-        {
-          id: 2,
-          question: 'What is your Minecraft (Java / Bedrock) in-game username and platform?',
-          type: 'text',
-        },
-        {
-          id: 3,
-          question: 'What is your timezone and which days/hours are you most active on ZetrexMc?',
-          type: 'textarea',
-        },
-        {
-          id: 4,
-          question: 'Why do you want to join the ZetrexMc staff team instead of simply playing as a regular member?',
-          type: 'textarea',
-        },
-        {
-          id: 5,
-          question: 'Do you have previous moderation, helper, or staff experience on Minecraft servers or Discord communities? Explain your role.',
-          type: 'textarea',
-        },
-        {
-          id: 6,
-          question: 'What qualities make you a reliable and fair staff member for ZetrexMc?',
-          type: 'textarea',
-        },
-        {
-          id: 7,
-          question: 'How would you handle a player who is spamming chat or posting inappropriate links?',
-          type: 'textarea',
-        },
-        {
-          id: 8,
-          question: 'What steps would you take if you suspect a player is using hacked clients, auto-clickers, or exploits?',
-          type: 'textarea',
-        },
-        {
-          id: 9,
-          question: 'How do you stay calm and objective when a player argues with you or insults you after receiving a punishment?',
-          type: 'textarea',
-        },
-        {
-          id: 10,
-          question: 'If a close friend or clanmate breaks ZetrexMc rules, how would you respond?',
-          type: 'textarea',
-        },
-        {
-          id: 11,
-          question: 'What is the difference between a Helper, Moderator, and Administrator in your view?',
-          type: 'textarea',
-        },
-        {
-          id: 12,
-          question: 'How would you resolve a heated argument or scam accusation between two players in chat or a ticket?',
-          type: 'textarea',
-        },
-        {
-          id: 13,
-          question: 'Are you familiar with common moderation commands, punishment escalation, and ticket/evidence logging?',
-          type: 'textarea',
-        },
-        {
-          id: 14,
-          question: 'What would you do if you are unsure whether a specific action or build violates the server rules?',
-          type: 'textarea',
-        },
-        {
-          id: 15,
-          question: 'How do you handle situations where another staff member makes a mistake or abuses permissions?',
-          type: 'textarea',
-        },
-        {
-          id: 16,
-          question: 'How comfortable are you helping new players who are confused about ZetrexMc features, rules, or gameplay?',
-          type: 'textarea',
-        },
-        {
-          id: 17,
-          question: 'Can you commit to following staff confidentiality and not leaking internal staff discussions or decisions?',
-          type: 'textarea',
-        },
-        {
-          id: 18,
-          question: 'How do you balance being active and helpful while avoiding burnout or rushing punishments?',
-          type: 'textarea',
-        },
-        {
-          id: 19,
-          question: 'What improvements or ideas could you bring to help keep the ZetrexMc community welcoming and competitive?',
-          type: 'textarea',
-        },
-        {
-          id: 20,
-          question: 'Is there anything else you want the ZetrexMc administration team to know about you or your application?',
-          type: 'textarea',
-        },
+        { id: 1, question: 'What is your Discord username?', type: 'text' },
+        { id: 2, question: 'What is your Minecraft (Java / Bedrock) in-game username and platform?', type: 'text' },
+        { id: 3, question: 'What is your timezone and which days/hours are you most active on ZetrexMc?', type: 'textarea' },
+        { id: 4, question: 'Why do you want to join the ZetrexMc staff team instead of simply playing as a regular member?', type: 'textarea' },
+        { id: 5, question: 'Do you have previous moderation, helper, or staff experience on Minecraft servers or Discord communities? Explain your role.', type: 'textarea' },
+        { id: 6, question: 'What qualities make you a reliable and fair staff member for ZetrexMc?', type: 'textarea' },
+        { id: 7, question: 'How would you handle a player who is spamming chat or posting inappropriate links?', type: 'textarea' },
+        { id: 8, question: 'What steps would you take if you suspect a player is using hacked clients, auto-clickers, or exploits?', type: 'textarea' },
+        { id: 9, question: 'How do you stay calm and objective when a player argues with you or insults you after receiving a punishment?', type: 'textarea' },
+        { id: 10, question: 'If a close friend or clanmate breaks ZetrexMc rules, how would you respond?', type: 'textarea' },
+        { id: 11, question: 'What is the difference between a Helper, Moderator, and Administrator in your view?', type: 'textarea' },
+        { id: 12, question: 'How would you resolve a heated argument or scam accusation between two players in chat or a ticket?', type: 'textarea' },
+        { id: 13, question: 'Are you familiar with common moderation commands, punishment escalation, and ticket/evidence logging?', type: 'textarea' },
+        { id: 14, question: 'What would you do if you are unsure whether a specific action or build violates the server rules?', type: 'textarea' },
+        { id: 15, question: 'How do you handle situations where another staff member makes a mistake or abuses permissions?', type: 'textarea' },
+        { id: 16, question: 'How comfortable are you helping new players who are confused about ZetrexMc features, rules, or gameplay?', type: 'textarea' },
+        { id: 17, question: 'Can you commit to following staff confidentiality and not leaking internal staff discussions or decisions?', type: 'textarea' },
+        { id: 18, question: 'How do you balance being active and helpful while avoiding burnout or rushing punishments?', type: 'textarea' },
+        { id: 19, question: 'What improvements or ideas could you bring to help keep the ZetrexMc community welcoming and competitive?', type: 'textarea' },
+        { id: 20, question: 'Is there anything else you want the ZetrexMc administration team to know about you or your application?', type: 'textarea' },
       ];
 
-      // Application state
       const state = {
         currentStep: 1,
         name: '',
@@ -450,7 +334,6 @@
         lastFormattedReport: '',
       };
 
-      // DOM Element References
       const els = {
         step1Section: document.getElementById('step1Section'),
         step2Section: document.getElementById('step2Section'),
@@ -473,7 +356,6 @@
         submissionFeedback: document.getElementById('submissionFeedback'),
         applySubmitBtn: document.getElementById('applySubmitBtn'),
 
-        // Telegram Modal
         openTelegramModalBtn: document.getElementById('openTelegramModalBtn'),
         closeTelegramModalBtn: document.getElementById('closeTelegramModalBtn'),
         telegramModal: document.getElementById('telegramModal'),
@@ -484,9 +366,6 @@
         tgSaveStatus: document.getElementById('tgSaveStatus'),
       };
 
-      /**
-       * Switches active step view (1, 2, or 3) and scrolls to top smoothly.
-       */
       function goToStep(stepNumber) {
         state.currentStep = stepNumber;
 
@@ -502,9 +381,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      /**
-       * Renders all 20 English staff questions into Step 3.
-       */
       function renderQuestions() {
         const fragment = document.createDocumentFragment();
 
@@ -546,25 +422,16 @@
         els.questionsContainer.appendChild(fragment);
       }
 
-      /**
-       * Shows an inline error message in Step 2.
-       */
       function showStep2Error(message) {
         els.step2Error.textContent = message;
         els.step2Error.classList.remove('hidden');
       }
 
-      /**
-       * Clears Step 2 error message.
-       */
       function clearStep2Error() {
         els.step2Error.textContent = '';
         els.step2Error.classList.add('hidden');
       }
 
-      /**
-       * Formats the full application into a clean plain-text message for Telegram.
-       */
       function buildApplicationText() {
         const lines = [
           'ZETREXMC STAFF APPLICATION',
@@ -585,9 +452,6 @@
         return lines.join('\n');
       }
 
-      /**
-       * Copies text safely inside iframes/browsers using execCommand fallback + clipboard API.
-       */
       function copyTextToClipboard(text) {
         try {
           const textarea = document.createElement('textarea');
@@ -605,9 +469,6 @@
         }
       }
 
-      /**
-       * Renders feedback banner in Step 3 (success, error, or local summary if Telegram isn't configured).
-       */
       function renderSubmissionFeedback({ variant, title, message, includeCopyButton = false }) {
         els.submissionFeedback.classList.remove(
           'hidden',
@@ -675,10 +536,6 @@
         }
       }
 
-      /**
-       * Sends the application text to Telegram Bot API.
-       * Splits messages if longer than Telegram's 4096-character limit.
-       */
       async function sendApplicationToTelegram(botToken, chatId, fullText) {
         const MAX_CHUNK = 4000;
         const chunks = [];
@@ -725,7 +582,6 @@
         }
       }
 
-      // Telegram Modal Handlers
       function openTelegramModal() {
         els.tgBotTokenInput.value = localStorage.getItem(STORAGE_KEYS.BOT_TOKEN) || '';
         els.tgChatIdInput.value = localStorage.getItem(STORAGE_KEYS.CHAT_ID) || '';
@@ -745,7 +601,6 @@
         els.tgSaveStatus.classList.remove('hidden');
       }
 
-      // Event Listeners
       els.startBtn.addEventListener('click', () => {
         goToStep(2);
         els.applicantName.focus();
@@ -792,7 +647,6 @@
       els.staffQuestionsForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Sync latest values from all inputs
         STAFF_QUESTIONS.forEach((q) => {
           const input = document.getElementById(`q_${q.id}`);
           if (input) {
@@ -800,7 +654,6 @@
           }
         });
 
-        // Validate that every question (1 to 20) has an answer
         const unanswered = STAFF_QUESTIONS.filter((q) => !state.answers[q.id]);
         if (unanswered.length > 0) {
           const firstMissingId = unanswered[0].id;
@@ -820,8 +673,8 @@
         const formattedReport = buildApplicationText();
         state.lastFormattedReport = formattedReport;
 
-        const botToken = (localStorage.getItem(STORAGE_KEYS.9168556717:AAEiWqaYLWRAYZLKB1HiSyHK6DBbKQXaZDc) || '').trim();
-        const chatId = (localStorage.getItem(STORAGE_KEYS5532276472) || '').trim();
+        const botToken = (localStorage.getItem(STORAGE_KEYS.BOT_TOKEN) || '').trim();
+        const chatId = (localStorage.getItem(STORAGE_KEYS.CHAT_ID) || '').trim();
 
         if (!botToken || !chatId) {
           renderSubmissionFeedback({
@@ -861,7 +714,6 @@
         }
       });
 
-      // Telegram modal events
       els.openTelegramModalBtn.addEventListener('click', openTelegramModal);
       els.closeTelegramModalBtn.addEventListener('click', closeTelegramModal);
 
@@ -901,7 +753,6 @@
         }
       });
 
-      // Initialize questions on load
       renderQuestions();
     })();
   </script>
